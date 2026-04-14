@@ -1,10 +1,5 @@
 name: ad-copy-ai-mcp
-description: "MEOK AI Labs — Ad Copy tools for AI agents and LLMs"
-vendor: MEOK AI Labs
-homepage: https://meok.ai
-repository: https://github.com/CSOAI-ORG/ad-copy-ai-mcp
-license: MIT
-categories: [Marketing, Content Creation]
-tags: [advertising, copywriting, ad-copy, marketing-copy, creative-writing]
-runtime: python
-entrypoint: server.py
+description: "Ad Copy Ai Mcp \u2014 Generate high-converting ad copy for multiple\
+  \ platforms."
+version: 1.0.0
+tools: []
