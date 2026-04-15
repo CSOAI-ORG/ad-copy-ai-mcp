@@ -1,0 +1,10 @@
+{
+  "name": "ad-copy-ai-mcp",
+  "description": "MEOK AI Labs \u2014 ad-copy-ai-mcp",
+  "vendor": "MEOK AI Labs",
+  "homepage": "https://meok.ai",
+  "repository": "https://github.com/CSOAI-ORG/ad-copy-ai-mcp",
+  "license": "MIT",
+  "runtime": "python",
+  "entryPoint": "mcp-wrapper.py"
+}
