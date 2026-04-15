@@ -1,5 +1,6 @@
 name: ad-copy-ai-mcp
-description: AI-powered ad copy generation for multi-platform campaigns.
+description: 'Ad Copy Ai tools for AI agents. Capabilities: generate ad copy, generate
+  variants, create campaign. Built by MEOK AI Labs.'
 version: 1.0.0
 tools:
 - name: generate_ad_copy
