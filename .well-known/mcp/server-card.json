@@ -1,0 +1,74 @@
+{
+  "name": "ad-copy-ai",
+  "description": "AI-powered ad copy generation for multi-platform campaigns.",
+  "version": "1.0.0",
+  "protocol_version": "2025-11-25",
+  "publisher": {
+    "name": "MEOK AI Labs",
+    "url": "https://meok.ai",
+    "email": "nicholas@meok.ai"
+  },
+  "repository": "https://github.com/CSOAI-ORG/ad-copy-ai-mcp",
+  "license": "MIT",
+  "transport": [
+    "stdio",
+    "streamable-http"
+  ],
+  "authentication": {
+    "type": "api-key",
+    "free_tier": true,
+    "free_limit": "15 calls/day"
+  },
+  "tools": [
+    {
+      "name": "generate_ad_copy",
+      "description": "Generate ad copy for a platform"
+    },
+    {
+      "name": "generate_variants",
+      "description": "Generate multiple ad variants for A/B testing"
+    },
+    {
+      "name": "create_campaign",
+      "description": "Create an ad campaign"
+    },
+    {
+      "name": "get_campaign",
+      "description": "Get campaign details"
+    },
+    {
+      "name": "add_creative",
+      "description": "Add a creative to campaign"
+    },
+    {
+      "name": "get_performance",
+      "description": "Get creative performance metrics"
+    },
+    {
+      "name": "optimize_copy",
+      "description": "Optimize existing copy based on performance"
+    },
+    {
+      "name": "generate_headlines",
+      "description": "Generate multiple headlines"
+    },
+    {
+      "name": "get_best_performing",
+      "description": "Get best performing creatives"
+    }
+  ],
+  "categories": [
+    "AI & Machine Learning",
+    "Content & Media",
+    "Marketing & SEO"
+  ],
+  "pricing": {
+    "free": {
+      "calls_per_day": 15
+    },
+    "pro": {
+      "price": "$29/month",
+      "url": "https://meok.ai/pricing"
+    }
+  }
+}
