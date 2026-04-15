@@ -1,31 +1,106 @@
 name: ad-copy-ai-mcp
-description: MEOK AI Labs MCP Server
+description: AI-powered ad copy generation for multi-platform campaigns.
 version: 1.0.0
 tools:
 - name: generate_ad_copy
   description: Generate ad copy for a platform
-  parameters: []
+  parameters:
+  - name: product
+    type: string
+    required: false
+  - name: platform
+    type: string
+    required: false
+  - name: tone
+    type: string
+    required: false
+  - name: benefit
+    type: string
+    required: false
+  - name: industry
+    type: string
+    required: false
 - name: generate_variants
   description: Generate multiple ad variants for A/B testing
-  parameters: []
+  parameters:
+  - name: product
+    type: string
+    required: false
+  - name: platform
+    type: string
+    required: false
+  - name: count
+    type: integer
+    required: false
 - name: create_campaign
   description: Create an ad campaign
-  parameters: []
+  parameters:
+  - name: campaign_name
+    type: string
+    required: true
+  - name: product
+    type: string
+    required: false
+  - name: platforms
+    type: array
+    required: false
+  - name: budget
+    type: number
+    required: false
+  - name: start_date
+    type: string
+    required: false
 - name: get_campaign
   description: Get campaign details
-  parameters: []
+  parameters:
+  - name: campaign_id
+    type: string
+    required: true
 - name: add_creative
   description: Add a creative to campaign
-  parameters: []
+  parameters:
+  - name: campaign_id
+    type: string
+    required: true
+  - name: creative
+    type: object
+    required: false
 - name: get_performance
   description: Get creative performance metrics
-  parameters: []
+  parameters:
+  - name: campaign_id
+    type: string
+    required: false
+  - name: creative_id
+    type: string
+    required: false
 - name: optimize_copy
   description: Optimize existing copy based on performance
-  parameters: []
+  parameters:
+  - name: creative_id
+    type: string
+    required: true
+  - name: target_metric
+    type: string
+    required: false
 - name: generate_headlines
   description: Generate multiple headlines
-  parameters: []
+  parameters:
+  - name: product
+    type: string
+    required: false
+  - name: platform
+    type: string
+    required: false
+  - name: count
+    type: integer
+    required: false
 - name: get_best_performing
   description: Get best performing creatives
-  parameters: []
+  parameters:
+  - name: campaign_id
+    type: string
+    required: true
+  - name: limit
+    type: integer
+    required: false

@@ -1,6 +1,6 @@
 {
   "name": "ad-copy-ai-mcp",
-  "description": "> **By [MEOK AI Labs](https://meok.ai)** \u2014 MEOK AI Labs MCP Server",
+  "description": "> **By [MEOK AI Labs](https://meok.ai)** \u2014 AI-powered ad copy generation for multi-platform campaigns.",
   "version": "1.0.0",
   "tools": [
     {
@@ -8,7 +8,23 @@
       "description": "Generate ad copy for a platform",
       "parameters": {
         "type": "object",
-        "properties": {},
+        "properties": {
+          "product": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string"
+          },
+          "tone": {
+            "type": "string"
+          },
+          "benefit": {
+            "type": "string"
+          },
+          "industry": {
+            "type": "string"
+          }
+        },
         "required": []
       }
     },
@@ -17,7 +33,17 @@
       "description": "Generate multiple ad variants for A/B testing",
       "parameters": {
         "type": "object",
-        "properties": {},
+        "properties": {
+          "product": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer"
+          }
+        },
         "required": []
       }
     },
@@ -26,8 +52,26 @@
       "description": "Create an ad campaign",
       "parameters": {
         "type": "object",
-        "properties": {},
-        "required": []
+        "properties": {
+          "campaign_name": {
+            "type": "string"
+          },
+          "product": {
+            "type": "string"
+          },
+          "platforms": {
+            "type": "array"
+          },
+          "budget": {
+            "type": "number"
+          },
+          "start_date": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "campaign_name"
+        ]
       }
     },
     {
@@ -35,8 +79,14 @@
       "description": "Get campaign details",
       "parameters": {
         "type": "object",
-        "properties": {},
-        "required": []
+        "properties": {
+          "campaign_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "campaign_id"
+        ]
       }
     },
     {
@@ -44,8 +94,17 @@
       "description": "Add a creative to campaign",
       "parameters": {
         "type": "object",
-        "properties": {},
-        "required": []
+        "properties": {
+          "campaign_id": {
+            "type": "string"
+          },
+          "creative": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "campaign_id"
+        ]
       }
     },
     {
@@ -53,7 +112,14 @@
       "description": "Get creative performance metrics",
       "parameters": {
         "type": "object",
-        "properties": {},
+        "properties": {
+          "campaign_id": {
+            "type": "string"
+          },
+          "creative_id": {
+            "type": "string"
+          }
+        },
         "required": []
       }
     },
@@ -62,8 +128,17 @@
       "description": "Optimize existing copy based on performance",
       "parameters": {
         "type": "object",
-        "properties": {},
-        "required": []
+        "properties": {
+          "creative_id": {
+            "type": "string"
+          },
+          "target_metric": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "creative_id"
+        ]
       }
     },
     {
@@ -71,7 +146,17 @@
       "description": "Generate multiple headlines",
       "parameters": {
         "type": "object",
-        "properties": {},
+        "properties": {
+          "product": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer"
+          }
+        },
         "required": []
       }
     },
@@ -80,8 +165,17 @@
       "description": "Get best performing creatives",
       "parameters": {
         "type": "object",
-        "properties": {},
-        "required": []
+        "properties": {
+          "campaign_id": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "campaign_id"
+        ]
       }
     }
   ]

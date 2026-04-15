@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """MEOK AI Labs — ad-copy-ai-mcp MCP Server. AI-powered ad copy generation for multi-platform campaigns."""
 
-import asyncio
 import json
 from datetime import datetime, timezone
 from typing import Any
@@ -12,6 +11,7 @@ import sys, os
 
 sys.path.insert(0, os.path.expanduser("~/clawd/meok-labs-engine/shared"))
 from auth_middleware import check_access
+from mcp.server.fastmcp import FastMCP
 
 FREE_DAILY_LIMIT = 15
 _usage = defaultdict(list)
@@ -21,14 +21,8 @@ def _rl(c="anon"):
     if len(_usage[c]) >= FREE_DAILY_LIMIT: return json.dumps({"error": f"Limit {FREE_DAILY_LIMIT}/day"})
     _usage[c].append(now); return None
 
-from mcp.server.models import InitializationOptions
-from mcp.server import NotificationOptions, Server
-from mcp.server.stdio import stdio_server
-from mcp.types import Resource, Tool, TextContent
-import mcp.types as types
-
 _store = {"campaigns": {}, "creatives": [], "variants": [], "templates": {}}
-server = Server("ad-copy-ai")
+mcp = FastMCP("ad-copy-ai", instructions="AI-powered ad copy generation for multi-platform campaigns.")
 
 
 def create_id():
@@ -150,162 +144,8 @@ BENEFITS = [
 ]
 
 
-@server.list_resources()
-async def handle_list_resources():
-    return [
-        Resource(
-            uri="ads://campaigns", name="Ad Campaigns", mimeType="application/json"
-        ),
-        Resource(
-            uri="ads://templates", name="Ad Templates", mimeType="application/json"
-        ),
-        Resource(
-            uri="ads://analytics",
-            name="Campaign Analytics",
-            mimeType="application/json",
-        ),
-    ]
-
-
-@server.list_tools()
-async def handle_list_tools():
-    return [
-        Tool(
-            name="generate_ad_copy",
-            description="Generate ad copy for a platform",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "product": {"type": "string"},
-                    "platform": {
-                        "type": "string",
-                        "enum": [
-                            "facebook",
-                            "google",
-                            "linkedin",
-                            "instagram",
-                            "tiktok",
-                            "twitter",
-                            "email",
-                            "generic",
-                        ],
-                    },
-                    "tone": {
-                        "type": "string",
-                        "enum": [
-                            "professional",
-                            "casual",
-                            "urgent",
-                            "educational",
-                            "humorous",
-                        ],
-                    },
-                    "benefit": {"type": "string"},
-                    "industry": {"type": "string"},
-                    "api_key": {"type": "string"},
-                },
-            },
-        ),
-        Tool(
-            name="generate_variants",
-            description="Generate multiple ad variants for A/B testing",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "product": {"type": "string"},
-                    "platform": {"type": "string"},
-                    "count": {"type": "number"},
-                    "api_key": {"type": "string"},
-                },
-            },
-        ),
-        Tool(
-            name="create_campaign",
-            description="Create an ad campaign",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "campaign_name": {"type": "string"},
-                    "product": {"type": "string"},
-                    "platforms": {"type": "array"},
-                    "budget": {"type": "number"},
-                    "start_date": {"type": "string"},
-                    "api_key": {"type": "string"},
-                },
-            },
-        ),
-        Tool(
-            name="get_campaign",
-            description="Get campaign details",
-            inputSchema={
-                "type": "object",
-                "properties": {"campaign_id": {"type": "string"}},
-            },
-        ),
-        Tool(
-            name="add_creative",
-            description="Add a creative to campaign",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "campaign_id": {"type": "string"},
-                    "creative": {"type": "object"},
-                },
-            },
-        ),
-        Tool(
-            name="get_performance",
-            description="Get creative performance metrics",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "campaign_id": {"type": "string"},
-                    "creative_id": {"type": "string"},
-                },
-            },
-        ),
-        Tool(
-            name="optimize_copy",
-            description="Optimize existing copy based on performance",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "creative_id": {"type": "string"},
-                    "target_metric": {
-                        "type": "string",
-                        "enum": ["ctr", "conversion", "engagement"],
-                    },
-                },
-            },
-        ),
-        Tool(
-            name="generate_headlines",
-            description="Generate multiple headlines",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "product": {"type": "string"},
-                    "platform": {"type": "string"},
-                    "count": {"type": "number"},
-                },
-            },
-        ),
-        Tool(
-            name="get_best_performing",
-            description="Get best performing creatives",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "campaign_id": {"type": "string"},
-                    "limit": {"type": "number"},
-                },
-            },
-        ),
-    ]
-
-
 def generate_copy(product, platform, tone, benefit=None, industry=None):
-    templates = TEMPLATES.get(platform, TEMPLATES["generic"])
+    templates = TEMPLATES.get(platform, TEMPLATES.get("facebook"))
     benefit = benefit or random.choice(BENEFITS)
 
     if platform == "facebook":
@@ -385,285 +225,217 @@ def generate_copy(product, platform, tone, benefit=None, industry=None):
         }
 
 
-@server.call_tool()
-async def handle_call_tool(name: str, arguments: Any = None) -> list[types.TextContent]:
-    args = arguments or {}
-    api_key = args.get("api_key", "")
+@mcp.tool()
+def generate_ad_copy(product: str = "our product", platform: str = "facebook", tone: str = "professional", benefit: str = "", industry: str = "", api_key: str = "") -> str:
+    """Generate ad copy for a platform"""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return [
-            TextContent(
-                type="text",
-                text=json.dumps(
-                    {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
-                ),
-            )
-        ]
-    if err := _rl(): return [TextContent(type="text", text=err)]
+        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+    if err := _rl(): return err
 
-    if name == "generate_ad_copy":
-        result = generate_copy(
-            args.get("product", "our product"),
-            args.get("platform", "facebook"),
-            args.get("tone", "professional"),
-            args.get("benefit"),
-            args.get("industry"),
+    result = generate_copy(product, platform, tone, benefit or None, industry or None)
+    return json.dumps(result, indent=2)
+
+
+@mcp.tool()
+def generate_variants(product: str = "our product", platform: str = "facebook", count: int = 3, api_key: str = "") -> str:
+    """Generate multiple ad variants for A/B testing"""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+    if err := _rl(): return err
+
+    variants = []
+    for i in range(count):
+        variant = generate_copy(
+            product, platform, random.choice(["professional", "casual", "urgent"])
         )
-        return [TextContent(type="text", text=json.dumps(result, indent=2))]
+        variant["variant_id"] = create_id()
+        variant["version"] = f"v{i + 1}"
+        variants.append(variant)
 
-    elif name == "generate_variants":
-        count = args.get("count", 3)
-        platform = args.get("platform", "facebook")
-        product = args.get("product", "our product")
+    _store["variants"].extend(variants)
+    return json.dumps({"variants": variants, "count": len(variants)}, indent=2)
 
-        variants = []
-        for i in range(count):
-            variant = generate_copy(
-                product, platform, random.choice(["professional", "casual", "urgent"])
-            )
-            variant["variant_id"] = create_id()
-            variant["version"] = f"v{i + 1}"
-            variants.append(variant)
 
-        _store["variants"].extend(variants)
-        return [
-            TextContent(
-                type="text",
-                text=json.dumps(
-                    {"variants": variants, "count": len(variants)}, indent=2
-                ),
-            )
-        ]
+@mcp.tool()
+def create_campaign(campaign_name: str, product: str = "", platforms: list = None, budget: float = 0, start_date: str = "", api_key: str = "") -> str:
+    """Create an ad campaign"""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+    if err := _rl(): return err
 
-    elif name == "create_campaign":
-        campaign = {
-            "id": create_id(),
-            "name": args["campaign_name"],
-            "product": args.get("product", ""),
-            "platforms": args.get("platforms", []),
-            "budget": args.get("budget", 0),
-            "start_date": args.get("start_date", datetime.now().isoformat()),
-            "status": "draft",
-            "creatives": [],
-            "created_at": datetime.now().isoformat(),
-        }
-        _store["campaigns"][campaign["id"]] = campaign
-        return [
-            TextContent(
-                type="text",
-                text=json.dumps(
-                    {
-                        "campaign_created": True,
-                        "campaign_id": campaign["id"],
-                        "name": campaign["name"],
-                    },
-                    indent=2,
-                ),
-            )
-        ]
+    campaign = {
+        "id": create_id(),
+        "name": campaign_name,
+        "product": product,
+        "platforms": platforms or [],
+        "budget": budget,
+        "start_date": start_date or datetime.now().isoformat(),
+        "status": "draft",
+        "creatives": [],
+        "created_at": datetime.now().isoformat(),
+    }
+    _store["campaigns"][campaign["id"]] = campaign
+    return json.dumps(
+        {"campaign_created": True, "campaign_id": campaign["id"], "name": campaign["name"]},
+        indent=2,
+    )
 
-    elif name == "get_campaign":
-        campaign_id = args.get("campaign_id")
-        if campaign_id in _store["campaigns"]:
-            return [
-                TextContent(
-                    type="text",
-                    text=json.dumps(_store["campaigns"][campaign_id], indent=2),
-                )
-            ]
-        return [
-            TextContent(type="text", text=json.dumps({"error": "Campaign not found"}))
-        ]
 
-    elif name == "add_creative":
-        campaign_id = args.get("campaign_id")
-        if campaign_id not in _store["campaigns"]:
-            return [
-                TextContent(
-                    type="text", text=json.dumps({"error": "Campaign not found"})
-                )
-            ]
+@mcp.tool()
+def get_campaign(campaign_id: str, api_key: str = "") -> str:
+    """Get campaign details"""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+    if err := _rl(): return err
 
-        creative = args.get("creative", {})
-        creative["id"] = create_id()
-        creative["added_at"] = datetime.now().isoformat()
-        _store["campaigns"][campaign_id]["creatives"].append(creative)
-        _store["creatives"].append(creative)
+    if campaign_id in _store["campaigns"]:
+        return json.dumps(_store["campaigns"][campaign_id], indent=2)
+    return json.dumps({"error": "Campaign not found"})
 
-        return [
-            TextContent(
-                type="text",
-                text=json.dumps(
-                    {"creative_added": True, "creative_id": creative["id"]}, indent=2
-                ),
-            )
-        ]
 
-    elif name == "get_performance":
-        creative_id = args.get("creative_id")
-        campaign_id = args.get("campaign_id")
+@mcp.tool()
+def add_creative(campaign_id: str, creative: dict = None, api_key: str = "") -> str:
+    """Add a creative to campaign"""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+    if err := _rl(): return err
 
-        creative = next(
-            (c for c in _store["creatives"] if c.get("id") == creative_id), None
-        )
-        if not creative:
-            return [
-                TextContent(
-                    type="text",
-                    text=json.dumps(
-                        {
-                            "impressions": 0,
-                            "clicks": 0,
-                            "ctr": 0,
-                            "conversions": 0,
-                            "conversion_rate": 0,
-                        }
-                    ),
-                )
-            ]
+    if campaign_id not in _store["campaigns"]:
+        return json.dumps({"error": "Campaign not found"})
 
-        impressions = creative.get("impressions", random.randint(1000, 50000))
-        clicks = creative.get("clicks", random.randint(10, 500))
-        ctr = round((clicks / impressions) * 100, 2) if impressions > 0 else 0
-        conversions = creative.get("conversions", random.randint(0, 50))
+    creative_data = creative or {}
+    creative_data["id"] = create_id()
+    creative_data["added_at"] = datetime.now().isoformat()
+    _store["campaigns"][campaign_id]["creatives"].append(creative_data)
+    _store["creatives"].append(creative_data)
 
-        return [
-            TextContent(
-                type="text",
-                text=json.dumps(
-                    {
-                        "creative_id": creative_id,
-                        "impressions": impressions,
-                        "clicks": clicks,
-                        "ctr": ctr,
-                        "conversions": conversions,
-                        "conversion_rate": round((conversions / clicks) * 100, 2)
-                        if clicks > 0
-                        else 0,
-                    },
-                    indent=2,
-                ),
-            )
-        ]
+    return json.dumps(
+        {"creative_added": True, "creative_id": creative_data["id"]}, indent=2
+    )
 
-    elif name == "optimize_copy":
-        creative_id = args.get("creative_id")
-        creative = next(
-            (c for c in _store["creatives"] if c.get("id") == creative_id), None
+
+@mcp.tool()
+def get_performance(campaign_id: str = "", creative_id: str = "", api_key: str = "") -> str:
+    """Get creative performance metrics"""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+    if err := _rl(): return err
+
+    creative = next(
+        (c for c in _store["creatives"] if c.get("id") == creative_id), None
+    )
+    if not creative:
+        return json.dumps(
+            {"impressions": 0, "clicks": 0, "ctr": 0, "conversions": 0, "conversion_rate": 0}
         )
 
-        if not creative:
-            return [
-                TextContent(
-                    type="text", text=json.dumps({"error": "Creative not found"})
-                )
-            ]
+    impressions = creative.get("impressions", random.randint(1000, 50000))
+    clicks = creative.get("clicks", random.randint(10, 500))
+    ctr = round((clicks / impressions) * 100, 2) if impressions > 0 else 0
+    conversions = creative.get("conversions", random.randint(0, 50))
 
-        optimizations = [
-            "Add numbers/stats to headline",
-            "Use power words: Free, New, Now, Save",
-            "Ask a question in the hook",
-            "Add social proof",
-            "Make CTA more specific",
-            "Add urgency language",
-        ]
-
-        return [
-            TextContent(
-                type="text",
-                text=json.dumps(
-                    {
-                        "original": creative,
-                        "suggested_improvements": random.sample(optimizations, 3),
-                        "new_copy_options": [
-                            generate_copy("Product", "facebook", "casual")
-                            for _ in range(2)
-                        ],
-                    },
-                    indent=2,
-                ),
-            )
-        ]
-
-    elif name == "generate_headlines":
-        product = args.get("product", "our product")
-        platform = args.get("platform", "google")
-        count = args.get("count", 5)
-
-        headlines = []
-        for _ in range(count):
-            copy = generate_copy(product, platform, "professional")
-            if "headlines" in copy:
-                headlines.extend(copy["headlines"])
-            elif "hook" in copy:
-                headlines.append(copy["hook"])
-            elif "subject" in copy:
-                headlines.append(copy["subject"])
-
-        return [
-            TextContent(
-                type="text", text=json.dumps({"headlines": headlines[:count]}, indent=2)
-            )
-        ]
-
-    elif name == "get_best_performing":
-        campaign_id = args.get("campaign_id")
-        limit = args.get("limit", 5)
-
-        if campaign_id not in _store["campaigns"]:
-            return [
-                TextContent(
-                    type="text", text=json.dumps({"error": "Campaign not found"})
-                )
-            ]
-
-        creatives = _store["campaigns"][campaign_id].get("creatives", [])
-        if not creatives:
-            return [
-                TextContent(
-                    type="text", text=json.dumps({"message": "No creatives yet"})
-                )
-            ]
-
-        scored = []
-        for c in creatives:
-            imp = c.get("impressions", 1000)
-            clk = c.get("clicks", 50)
-            scored.append(
-                {
-                    "id": c.get("id"),
-                    "ctr": round((clk / imp) * 100, 2) if imp > 0 else 0,
-                }
-            )
-
-        scored.sort(key=lambda x: x["ctr"], reverse=True)
-        return [
-            TextContent(
-                type="text", text=json.dumps({"best_performing": scored[:limit]})
-            )
-        ]
-
-    return [TextContent(type="text", text=json.dumps({"error": "Unknown tool"}))]
+    return json.dumps(
+        {
+            "creative_id": creative_id,
+            "impressions": impressions,
+            "clicks": clicks,
+            "ctr": ctr,
+            "conversions": conversions,
+            "conversion_rate": round((conversions / clicks) * 100, 2) if clicks > 0 else 0,
+        },
+        indent=2,
+    )
 
 
-async def main():
-    async with stdio_server(server._read_stream, server._write_stream) as (
-        read_stream,
-        write_stream,
-    ):
-        await server.run(
-            read_stream,
-            write_stream,
-            InitializationOptions(
-                server_name="ad-copy-ai",
-                server_version="0.1.0",
-                capabilities=server.get_capabilities(
-                    notification_options=NotificationOptions(),
-                    experimental_capabilities={},
-                ),
-            ),
+@mcp.tool()
+def optimize_copy(creative_id: str, target_metric: str = "ctr", api_key: str = "") -> str:
+    """Optimize existing copy based on performance"""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+    if err := _rl(): return err
+
+    creative = next(
+        (c for c in _store["creatives"] if c.get("id") == creative_id), None
+    )
+
+    if not creative:
+        return json.dumps({"error": "Creative not found"})
+
+    optimizations = [
+        "Add numbers/stats to headline",
+        "Use power words: Free, New, Now, Save",
+        "Ask a question in the hook",
+        "Add social proof",
+        "Make CTA more specific",
+        "Add urgency language",
+    ]
+
+    return json.dumps(
+        {
+            "original": creative,
+            "suggested_improvements": random.sample(optimizations, 3),
+            "new_copy_options": [
+                generate_copy("Product", "facebook", "casual") for _ in range(2)
+            ],
+        },
+        indent=2,
+    )
+
+
+@mcp.tool()
+def generate_headlines(product: str = "our product", platform: str = "google", count: int = 5, api_key: str = "") -> str:
+    """Generate multiple headlines"""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+    if err := _rl(): return err
+
+    headlines = []
+    for _ in range(count):
+        copy = generate_copy(product, platform, "professional")
+        if "headlines" in copy:
+            headlines.extend(copy["headlines"])
+        elif "hook" in copy:
+            headlines.append(copy["hook"])
+        elif "subject" in copy:
+            headlines.append(copy["subject"])
+
+    return json.dumps({"headlines": headlines[:count]}, indent=2)
+
+
+@mcp.tool()
+def get_best_performing(campaign_id: str, limit: int = 5, api_key: str = "") -> str:
+    """Get best performing creatives"""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+    if err := _rl(): return err
+
+    if campaign_id not in _store["campaigns"]:
+        return json.dumps({"error": "Campaign not found"})
+
+    creatives = _store["campaigns"][campaign_id].get("creatives", [])
+    if not creatives:
+        return json.dumps({"message": "No creatives yet"})
+
+    scored = []
+    for c in creatives:
+        imp = c.get("impressions", 1000)
+        clk = c.get("clicks", 50)
+        scored.append(
+            {"id": c.get("id"), "ctr": round((clk / imp) * 100, 2) if imp > 0 else 0}
         )
+
+    scored.sort(key=lambda x: x["ctr"], reverse=True)
+    return json.dumps({"best_performing": scored[:limit]})
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    mcp.run()
