@@ -1,4 +1,31 @@
 name: ad-copy-ai-mcp
 description: MEOK AI Labs MCP Server
 version: 1.0.0
-tools: []
+tools:
+- name: generate_ad_copy
+  description: Generate ad copy for a platform
+  parameters: []
+- name: generate_variants
+  description: Generate multiple ad variants for A/B testing
+  parameters: []
+- name: create_campaign
+  description: Create an ad campaign
+  parameters: []
+- name: get_campaign
+  description: Get campaign details
+  parameters: []
+- name: add_creative
+  description: Add a creative to campaign
+  parameters: []
+- name: get_performance
+  description: Get creative performance metrics
+  parameters: []
+- name: optimize_copy
+  description: Optimize existing copy based on performance
+  parameters: []
+- name: generate_headlines
+  description: Generate multiple headlines
+  parameters: []
+- name: get_best_performing
+  description: Get best performing creatives
+  parameters: []
