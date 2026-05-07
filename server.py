@@ -242,6 +242,15 @@ def generate_ad_copy(product: str = "our product", platform: str = "facebook", t
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        product (str): The product to analyze or process.
+        platform (str): The platform to analyze or process.
+        tone (str): The tone to analyze or process.
+        benefit (str): The benefit to analyze or process.
+        industry (str): The industry to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -283,6 +292,13 @@ def generate_variants(product: str = "our product", platform: str = "facebook", 
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        product (str): The product to analyze or process.
+        platform (str): The platform to analyze or process.
+        count (int): The count to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -333,6 +349,15 @@ def create_campaign(campaign_name: str, product: str = "", platforms: list = Non
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        campaign_name (str): The campaign name to analyze or process.
+        product (str): The product to analyze or process.
+        platforms (list): The platforms to analyze or process.
+        budget (float): The budget to analyze or process.
+        start_date (str): The start date to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -389,6 +414,11 @@ def get_campaign(campaign_id: str, api_key: str = "") -> str:
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        campaign_id (str): The campaign id to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -431,6 +461,12 @@ def add_creative(campaign_id: str, creative: dict = None, api_key: str = "") -> 
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        campaign_id (str): The campaign id to analyze or process.
+        creative (dict): The creative to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -482,6 +518,12 @@ def get_performance(campaign_id: str = "", creative_id: str = "", api_key: str =
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        campaign_id (str): The campaign id to analyze or process.
+        creative_id (str): The creative id to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -546,6 +588,12 @@ def optimize_copy(creative_id: str, target_metric: str = "ctr", api_key: str = "
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        creative_id (str): The creative id to analyze or process.
+        target_metric (str): The target metric to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -611,6 +659,13 @@ def generate_headlines(product: str = "our product", platform: str = "google", c
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        product (str): The product to analyze or process.
+        platform (str): The platform to analyze or process.
+        count (int): The count to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -661,6 +716,12 @@ def get_best_performing(campaign_id: str, limit: int = 5, api_key: str = "") -> 
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        campaign_id (str): The campaign id to analyze or process.
+        limit (int): The limit to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
