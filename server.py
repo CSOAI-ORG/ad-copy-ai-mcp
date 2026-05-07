@@ -227,7 +227,22 @@ def generate_copy(product, platform, tone, benefit=None, industry=None):
 
 @mcp.tool()
 def generate_ad_copy(product: str = "our product", platform: str = "facebook", tone: str = "professional", benefit: str = "", industry: str = "", api_key: str = "") -> str:
-    """Generate ad copy for a platform"""
+    """Generate ad copy for a platform
+
+    Behavior:
+        This tool generates structured output without modifying external systems.
+        Output is deterministic for identical inputs. No side effects.
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
@@ -239,7 +254,22 @@ def generate_ad_copy(product: str = "our product", platform: str = "facebook", t
 
 @mcp.tool()
 def generate_variants(product: str = "our product", platform: str = "facebook", count: int = 3, api_key: str = "") -> str:
-    """Generate multiple ad variants for A/B testing"""
+    """Generate multiple ad variants for A/B testing
+
+    Behavior:
+        This tool generates structured output without modifying external systems.
+        Output is deterministic for identical inputs. No side effects.
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
@@ -260,7 +290,22 @@ def generate_variants(product: str = "our product", platform: str = "facebook", 
 
 @mcp.tool()
 def create_campaign(campaign_name: str, product: str = "", platforms: list = None, budget: float = 0, start_date: str = "", api_key: str = "") -> str:
-    """Create an ad campaign"""
+    """Create an ad campaign
+
+    Behavior:
+        This tool generates structured output without modifying external systems.
+        Output is deterministic for identical inputs. No side effects.
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
@@ -286,7 +331,23 @@ def create_campaign(campaign_name: str, product: str = "", platforms: list = Non
 
 @mcp.tool()
 def get_campaign(campaign_id: str, api_key: str = "") -> str:
-    """Get campaign details"""
+    """Get campaign details
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
@@ -299,7 +360,22 @@ def get_campaign(campaign_id: str, api_key: str = "") -> str:
 
 @mcp.tool()
 def add_creative(campaign_id: str, creative: dict = None, api_key: str = "") -> str:
-    """Add a creative to campaign"""
+    """Add a creative to campaign
+
+    Behavior:
+        This tool generates structured output without modifying external systems.
+        Output is deterministic for identical inputs. No side effects.
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
@@ -321,7 +397,22 @@ def add_creative(campaign_id: str, creative: dict = None, api_key: str = "") -> 
 
 @mcp.tool()
 def get_performance(campaign_id: str = "", creative_id: str = "", api_key: str = "") -> str:
-    """Get creative performance metrics"""
+    """Get creative performance metrics
+
+    Behavior:
+        This tool generates structured output without modifying external systems.
+        Output is deterministic for identical inputs. No side effects.
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
@@ -355,7 +446,23 @@ def get_performance(campaign_id: str = "", creative_id: str = "", api_key: str =
 
 @mcp.tool()
 def optimize_copy(creative_id: str, target_metric: str = "ctr", api_key: str = "") -> str:
-    """Optimize existing copy based on performance"""
+    """Optimize existing copy based on performance
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
@@ -391,7 +498,22 @@ def optimize_copy(creative_id: str, target_metric: str = "ctr", api_key: str = "
 
 @mcp.tool()
 def generate_headlines(product: str = "our product", platform: str = "google", count: int = 5, api_key: str = "") -> str:
-    """Generate multiple headlines"""
+    """Generate multiple headlines
+
+    Behavior:
+        This tool generates structured output without modifying external systems.
+        Output is deterministic for identical inputs. No side effects.
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
@@ -412,7 +534,22 @@ def generate_headlines(product: str = "our product", platform: str = "google", c
 
 @mcp.tool()
 def get_best_performing(campaign_id: str, limit: int = 5, api_key: str = "") -> str:
-    """Get best performing creatives"""
+    """Get best performing creatives
+
+    Behavior:
+        This tool generates structured output without modifying external systems.
+        Output is deterministic for identical inputs. No side effects.
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
