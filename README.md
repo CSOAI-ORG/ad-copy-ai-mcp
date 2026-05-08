@@ -1,45 +1,63 @@
-[![ad-copy-ai-mcp MCP server](https://glama.ai/mcp/servers/CSOAI-ORG/ad-copy-ai-mcp/badges/score.svg)](https://glama.ai/mcp/servers/CSOAI-ORG/ad-copy-ai-mcp)
-[![MCP Registry](https://img.shields.io/badge/MCP_Registry-Published-green)](https://registry.modelcontextprotocol.io)
-[![PyPI](https://img.shields.io/pypi/v/ad-copy-ai-mcp)](https://pypi.org/project/ad-copy-ai-mcp/)
-
-[![ad-copy-ai-mcp MCP server](https://glama.ai/mcp/servers/CSOAI-ORG/ad-copy-ai-mcp/badges/card.svg)](https://glama.ai/mcp/servers/CSOAI-ORG/ad-copy-ai-mcp)
-
 <div align="center">
 
-[![GitHub stars](https://img.shields.io/github/stars/CSOAI-ORG/ad-copy-ai-mcp)](https://github.com/CSOAI-ORG/ad-copy-ai-mcp/stargazers)
+# Ad Copy Ai MCP
 
-# uadU copyU aiU mcp
+**MCP server for ad copy ai mcp operations**
 
-**> By [MEOK AI Labs](https://meok.ai) — AI-powered ad copy generation for multi-platform campaigns**
-
-[![npm version](https://img.shields.io/npm/v/@meok-ai/ad-copy-ai-mcp)](https://www.npmjs.com/package/@meok-ai/ad-copy-ai-mcp)
+[![PyPI](https://img.shields.io/pypi/v/meok-ad-copy-ai-mcp)](https://pypi.org/project/meok-ad-copy-ai-mcp/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![MEOK AI Labs](https://img.shields.io/badge/MEOK_AI_Labs-255+_servers-purple)](https://meok.ai)
-
-[Installation](#installation) · [Docs](https://csoai.org) · [Report Bug](https://github.com/CSOAI-ORG/ad-copy-ai-mcp/issues)
+[![MEOK AI Labs](https://img.shields.io/badge/MEOK_AI_Labs-MCP_Server-purple)](https://meok.ai)
 
 </div>
 
----
+## Overview
+
+Ad Copy Ai MCP provides AI-powered tools via the Model Context Protocol (MCP).
+
+## Tools
+
+| Tool | Description |
+|------|-------------|
+| `generate_ad_copy` | Generate ad copy for a platform |
+| `generate_variants` | Generate multiple ad variants for A/B testing |
+| `create_campaign` | Create an ad campaign |
+| `get_campaign` | Get campaign details |
+| `add_creative` | Add a creative to campaign |
+| `get_performance` | Get creative performance metrics |
+| `optimize_copy` | Optimize existing copy based on performance |
+| `generate_headlines` | Generate multiple headlines |
+| `get_best_performing` | Get best performing creatives |
 
 ## Installation
 
 ```bash
-pip install ad-copy-ai-mcp
-# or
-npm install -g @meok-ai/ad-copy-ai-mcp
+pip install meok-ad-copy-ai-mcp
 ```
 
-## Quick Start
+## Usage with Claude Desktop
 
-See the project repository for full documentation and examples.
+Add to your Claude Desktop MCP config (`claude_desktop_config.json`):
 
-## Enterprise Support
+```json
+{
+  "mcpServers": {
+    "ad-copy-ai": {
+      "command": "python",
+      "args": ["-m", "meok_ad_copy_ai_mcp.server"]
+    }
+  }
+}
+```
 
-- 📧 nicholas@csoai.org
-- 🌐 [CSOAI.org](https://csoai.org)
+## Usage with FastMCP
+
+```python
+from mcp.server.fastmcp import FastMCP
+
+# This server exposes 9 tool(s) via MCP
+# See server.py for full implementation
+```
 
 ## License
 
-MIT © [CSOAI](https://csoai.org)
-<!-- mcp-name: io.github.CSOAI-ORG/ad-copy-ai-mcp -->
+MIT © [MEOK AI Labs](https://meok.ai)
