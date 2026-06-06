@@ -1,0 +1,36 @@
+# Ad Copy Ai MCP
+
+> AI-powered ad copy generation for multi-platform campaigns
+
+`ad-copy-ai-mcp` is a Model Context Protocol (MCP) server by MEOK AI Labs.
+
+## Install
+
+```bash
+pip install ad-copy-ai-mcp
+```
+
+Or run without installing:
+
+```bash
+uvx ad-copy-ai-mcp
+```
+
+## Tools
+
+- `generate_ad_copy` — Generate ad copy for a platform
+- `generate_variants` — Generate multiple ad variants for A/B testing
+- `create_campaign` — Create an ad campaign
+- `get_campaign` — Get campaign details
+- `add_creative` — Add a creative to campaign
+- `get_performance` — Get creative performance metrics
+- `optimize_copy` — Optimize existing copy based on performance
+- `generate_headlines` — Generate multiple headlines
+- `get_best_performing` — Get best performing creatives
+
+## Links
+
+- Source: https://github.com/CSOAI-ORG/ad-copy-ai-mcp
+- PyPI: https://pypi.org/project/ad-copy-ai-mcp/
+- MEOK AI Labs: https://meok.ai
+- Council of AI: https://councilof.ai
