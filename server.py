@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""MEOK AI Labs — ad-copy-ai-mcp MCP Server. AI-powered ad copy generation for multi-platform campaigns."""
+"""
+Buy Pro: https://www.csoai.org/checkout
+MEOK AI Labs — ad-copy-ai-mcp MCP Server. AI-powered ad copy generation for multi-platform campaigns."""
 
 import json
 from datetime import datetime, timezone
@@ -9,8 +11,11 @@ import uuid
 import random
 import sys, os
 
-sys.path.insert(0, os.path.expanduser("~/clawd/meok-labs-engine/shared"))
-from auth_middleware import check_access
+try:
+    from auth_middleware import check_access
+except ImportError:
+    def check_access(api_key: str = "") -> tuple:
+        return (True, "Open access", "community")
 from mcp.server.fastmcp import FastMCP
 
 FREE_DAILY_LIMIT = 15
@@ -268,7 +273,7 @@ def generate_ad_copy(product: str = "our product", platform: str = "facebook", t
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+        return json.dumps({"error": msg, "upgrade_url": "https://councilof.ai"})
     if err := _rl(): return err
 
     result = generate_copy(product, platform, tone, benefit or None, industry or None)
@@ -316,7 +321,7 @@ def generate_variants(product: str = "our product", platform: str = "facebook", 
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+        return json.dumps({"error": msg, "upgrade_url": "https://councilof.ai"})
     if err := _rl(): return err
 
     variants = []
@@ -375,7 +380,7 @@ def create_campaign(campaign_name: str, product: str = "", platforms: list = Non
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+        return json.dumps({"error": msg, "upgrade_url": "https://councilof.ai"})
     if err := _rl(): return err
 
     campaign = {
@@ -436,7 +441,7 @@ def get_campaign(campaign_id: str, api_key: str = "") -> str:
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+        return json.dumps({"error": msg, "upgrade_url": "https://councilof.ai"})
     if err := _rl(): return err
 
     if campaign_id in _store["campaigns"]:
@@ -484,7 +489,7 @@ def add_creative(campaign_id: str, creative: dict = None, api_key: str = "") -> 
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+        return json.dumps({"error": msg, "upgrade_url": "https://councilof.ai"})
     if err := _rl(): return err
 
     if campaign_id not in _store["campaigns"]:
@@ -541,7 +546,7 @@ def get_performance(campaign_id: str = "", creative_id: str = "", api_key: str =
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+        return json.dumps({"error": msg, "upgrade_url": "https://councilof.ai"})
     if err := _rl(): return err
 
     creative = next(
@@ -611,7 +616,7 @@ def optimize_copy(creative_id: str, target_metric: str = "ctr", api_key: str = "
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+        return json.dumps({"error": msg, "upgrade_url": "https://councilof.ai"})
     if err := _rl(): return err
 
     creative = next(
@@ -683,7 +688,7 @@ def generate_headlines(product: str = "our product", platform: str = "google", c
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+        return json.dumps({"error": msg, "upgrade_url": "https://councilof.ai"})
     if err := _rl(): return err
 
     headlines = []
@@ -739,7 +744,7 @@ def get_best_performing(campaign_id: str, limit: int = 5, api_key: str = "") -> 
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
+        return json.dumps({"error": msg, "upgrade_url": "https://councilof.ai"})
     if err := _rl(): return err
 
     if campaign_id not in _store["campaigns"]:
@@ -761,5 +766,8 @@ def get_best_performing(campaign_id: str, limit: int = 5, api_key: str = "") -> 
     return json.dumps({"best_performing": scored[:limit]})
 
 
-if __name__ == "__main__":
+def main():
     mcp.run()
+
+if __name__ == '__main__':
+    main()
