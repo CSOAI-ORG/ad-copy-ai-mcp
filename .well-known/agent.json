@@ -1,0 +1,104 @@
+{
+  "name": "ad-copy-ai-mcp",
+  "description": "Ad Copy Ai MCP Server by MEOK AI Labs",
+  "url": "https://proofof.ai/scorecard/ad-copy-ai-mcp.html",
+  "version": "1.0.6",
+  "protocolVersion": "0.2.0",
+  "provider": {
+    "organization": "MEOK AI Labs",
+    "url": "https://meok.ai"
+  },
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "defaultInputModes": [
+    "text"
+  ],
+  "defaultOutputModes": [
+    "text"
+  ],
+  "skills": [
+    {
+      "id": "generate_ad_copy",
+      "name": "Generate Ad Copy",
+      "description": "generate_ad_copy via ad-copy-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "generate_variants",
+      "name": "Generate Variants",
+      "description": "generate_variants via ad-copy-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "create_campaign",
+      "name": "Create Campaign",
+      "description": "create_campaign via ad-copy-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "get_campaign",
+      "name": "Get Campaign",
+      "description": "get_campaign via ad-copy-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "add_creative",
+      "name": "Add Creative",
+      "description": "add_creative via ad-copy-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "get_performance",
+      "name": "Get Performance",
+      "description": "get_performance via ad-copy-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "optimize_copy",
+      "name": "Optimize Copy",
+      "description": "optimize_copy via ad-copy-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "generate_headlines",
+      "name": "Generate Headlines",
+      "description": "generate_headlines via ad-copy-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "get_best_performing",
+      "name": "Get Best Performing",
+      "description": "get_best_performing via ad-copy-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    }
+  ]
+}

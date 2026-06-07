@@ -1,0 +1,27 @@
+{
+  "acpVersion": "0.1",
+  "agent": {
+    "name": "ad-copy-ai-mcp",
+    "description": "Ad Copy Ai MCP Server by MEOK AI Labs",
+    "version": "1.0.6",
+    "provider": "MEOK AI Labs",
+    "interfaces": [
+      {
+        "type": "mcp",
+        "transport": "stdio",
+        "package": "ad-copy-ai-mcp"
+      }
+    ],
+    "capabilities": [
+      "generate_ad_copy",
+      "generate_variants",
+      "create_campaign",
+      "get_campaign",
+      "add_creative",
+      "get_performance",
+      "optimize_copy",
+      "generate_headlines",
+      "get_best_performing"
+    ]
+  }
+}
