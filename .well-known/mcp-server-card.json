@@ -1,0 +1,40 @@
+{
+  "name": "ad-copy-ai-mcp",
+  "title": "Ad Copy Ai Mcp",
+  "description": "Ad Copy Ai tools for AI agents. Capabilities: generate ad copy, generate variants, create campaign. Built by MEOK AI Labs.",
+  "version": "1.0.6",
+  "homepage": "https://meok.ai",
+  "license": "MIT",
+  "transport": {
+    "type": "stdio"
+  },
+  "tools": [
+    {
+      "name": "generate_ad_copy"
+    },
+    {
+      "name": "generate_variants"
+    },
+    {
+      "name": "create_campaign"
+    },
+    {
+      "name": "get_campaign"
+    },
+    {
+      "name": "add_creative"
+    },
+    {
+      "name": "get_performance"
+    },
+    {
+      "name": "optimize_copy"
+    },
+    {
+      "name": "generate_headlines"
+    },
+    {
+      "name": "get_best_performing"
+    }
+  ]
+}

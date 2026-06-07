@@ -1,0 +1,9 @@
+# ad-copy-ai-mcp - Auto-trigger Rules
+
+When the user asks about ad copy, use ad-copy-ai-mcp tools: generate_ad_copy, generate_variants, create_campaign, get_campaign, add_creative
+
+**MCP server for ad copy ai mcp operations**
+
+Install: `pip install ad-copy-ai-mcp`
+
+By MEOK AI Labs — MIT licensed.

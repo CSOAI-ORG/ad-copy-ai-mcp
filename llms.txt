@@ -1,36 +1,48 @@
-# Ad Copy Ai MCP
-
-> AI-powered ad copy generation for multi-platform campaigns
-
-`ad-copy-ai-mcp` is a Model Context Protocol (MCP) server by MEOK AI Labs.
+# ad-copy-ai-mcp
+# **MCP server for ad copy ai mcp operations**
 
 ## Install
-
 ```bash
 pip install ad-copy-ai-mcp
 ```
 
-Or run without installing:
-
-```bash
-uvx ad-copy-ai-mcp
-```
+## Auth & Rate Limits
+- Free tier: 10 calls/day. No API key required.
+- Pro tier (£79/mo): unlimited + signed attestations.
+- Enterprise (£1,499/mo): white-label.
 
 ## Tools
 
-- `generate_ad_copy` — Generate ad copy for a platform
-- `generate_variants` — Generate multiple ad variants for A/B testing
-- `create_campaign` — Create an ad campaign
-- `get_campaign` — Get campaign details
-- `add_creative` — Add a creative to campaign
-- `get_performance` — Get creative performance metrics
-- `optimize_copy` — Optimize existing copy based on performance
-- `generate_headlines` — Generate multiple headlines
-- `get_best_performing` — Get best performing creatives
+### `generate_ad_copy`
+Generate ad copy for a platform
 
-## Links
+### `generate_variants`
+Generate multiple ad variants for A/B testing
 
-- Source: https://github.com/CSOAI-ORG/ad-copy-ai-mcp
-- PyPI: https://pypi.org/project/ad-copy-ai-mcp/
-- MEOK AI Labs: https://meok.ai
-- Council of AI: https://councilof.ai
+### `create_campaign`
+Create an ad campaign
+
+### `get_campaign`
+Get campaign details
+
+### `add_creative`
+Add a creative to campaign
+
+### `get_performance`
+Get creative performance metrics
+
+### `optimize_copy`
+Optimize existing copy based on performance
+
+### `generate_headlines`
+Generate multiple headlines
+
+### `get_best_performing`
+Get best performing creatives
+
+
+## Maintainer
+MEOK AI Labs · hello@meok.ai · https://meok.ai · MIT licensed
+
+## Pairs with
+Governance moat: pair this tool with any of MEOK's 38 governance MCPs (EU AI Act, DORA, NIS2, CRA, GDPR, ISO 42001, etc.) for full compliance coverage.

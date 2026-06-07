@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """
-Buy Pro: https://www.csoai.org/checkout
 MEOK AI Labs — ad-copy-ai-mcp MCP Server. AI-powered ad copy generation for multi-platform campaigns."""
 
 import json
