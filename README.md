@@ -1,4 +1,4 @@
-<!-- mcp-name: CSOAI-ORG/ad-copy-ai-mcp -->
+<!-- mcp-name: io.github.CSOAI-ORG/ad-copy-ai-mcp -->
 [![MCP Scorecard: 74/100](https://img.shields.io/badge/proofof.ai-74%2F100-5b21b6)](https://proofof.ai/scorecard/ad-copy-ai-mcp.html)
 
 # Ad Copy Ai MCP
@@ -98,3 +98,28 @@ buyers can deploy without vendor-lock-in objections.
 
 <!-- BUY-LADDER:END -->
 
+
+
+## Configuration
+
+Add to your `claude_desktop_config.json` (Claude Desktop) or your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "ad-copy-ai-mcp": {
+      "command": "uvx",
+      "args": ["ad-copy-ai-mcp"]
+    }
+  }
+}
+```
+
+Or: `pip install ad-copy-ai-mcp` then run the `ad-copy-ai-mcp` command (stdio transport).
+
+## Examples
+
+Once configured, ask your assistant, for example:
+- "Use `generate_ad_copy` to …"
+- "Use `generate_variants` to …"
+- "Use `create_campaign` to …"

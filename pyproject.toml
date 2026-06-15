@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 [project]
 name = "ad-copy-ai-mcp"
-version = "1.0.9"
+version = "1.0.12"
 readme = "README.md"
 description = "Ad Copy Ai tools for AI agents. Capabilities: generate ad copy, generate variants, create campaign. Built by MEOK AI Labs."
 license = {file = "LICENSE"}
@@ -26,3 +26,22 @@ only-include = ["auth_middleware.py", "server.py"]
 
 [project.scripts]
 ad_copy_ai_mcp = "server:main"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "W", "I", "N"]
+ignore = ["E501"]
+
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = true
+warn_unused_Configs = true
+disallow_untyped_defs = true
+
