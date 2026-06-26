@@ -1,11 +1,7 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.CSOAI-ORG/ad-copy-ai-mcp",
-<<<<<<< Updated upstream
   "version": "1.0.12",
-=======
-  "version": "1.0.10",
->>>>>>> Stashed changes
   "description": "Ad Copy Ai MCP Server by MEOK AI Labs",
   "repository": {
     "url": "https://github.com/CSOAI-ORG/ad-copy-ai-mcp",
@@ -16,11 +12,7 @@
     {
       "registryType": "pypi",
       "identifier": "ad-copy-ai-mcp",
-<<<<<<< Updated upstream
       "version": "1.0.12",
-=======
-      "version": "1.0.10",
->>>>>>> Stashed changes
       "runtimeHint": "python",
       "transport": {
         "type": "stdio"
